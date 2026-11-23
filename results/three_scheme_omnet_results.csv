@@ -1,0 +1,4 @@
+scheme,scenario,planned_frames,missing_input,source_packets_sent,delivered,network_or_qci_drop,clipped_admission_drop,clipped_filter_drop,clipped_deadline_drop,full_stream_gate_drop,max_st_queue,mean_delay_s,max_delay_s,min_delay_s,p99_delay_s,p999_delay_s,deadline_miss
+Qbv-only,mixed,200,12,198,198,0,0,0,0,0,1,0.0003212536868686869,0.001008482,8.482e-06,0.001008482,0.001008482,61
+Full-Qci+Qbv,mixed,200,12,198,99,99,0,0,0,99,1,1.7860646464646468e-05,2.5556e-05,1.6996e-05,2.5556e-05,2.5556e-05,0
+Clipped-Qci+Qbv,mixed,200,12,127,127,0,71,10,61,0,1,1.4448503937007874e-05,1.6996e-05,8.482e-06,1.6996e-05,1.6996e-05,0

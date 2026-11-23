@@ -1,0 +1,6 @@
+config,candidate_frames,source_packets_sent,delivered,dropped_total,source_admission_drop,network_drop,gate_drop,filter_drop,flow_drop,early_drop,deadline_drop,max_queue,avg_queue,mean_delay_s,max_delay_s,p99_delay_s,deadline_miss
+AblationFlowMeterOnly,198,188,188,10,10,0,0,0,10,0,0,1,0.18055807333333335,0.00033698228723404253,0.001008482,0.001008482,61
+AblationProposed,198,127,127,71,71,0,0,0,0,0,61,1,0.009054893333333335,1.4448503937007874e-05,1.6996e-05,1.6996e-05,0
+AblationTimestampFlow,198,127,127,71,71,0,0,0,10,0,61,1,0.009054893333333335,1.4448503937007874e-05,1.6996e-05,1.6996e-05,0
+AblationTimestampOnly,198,137,137,61,61,0,0,0,0,0,61,1,0.009054893333333335,1.52592700729927e-05,2.5556e-05,2.5556e-05,0
+AblationTimestampSequence,198,127,127,71,71,0,0,0,0,0,61,1,0.009054893333333335,1.4448503937007874e-05,1.6996e-05,1.6996e-05,0

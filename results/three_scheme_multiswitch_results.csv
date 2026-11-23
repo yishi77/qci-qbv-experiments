@@ -1,0 +1,4 @@
+scheme,planned_base_frames,source_packets_sent,delivered,missing_input,gate_dropped,max_st_queue_any_hop,sum_st_queue_timeavg,mean_delay_s,max_delay_s,p99_delay_s
+Qbv-only,200,198,198,12,0,1,0.18056195333333333,0.00033831956565656565,0.001025542,0.001025542
+Full-Qci+Qbv,200,198,99,12,99,1,0.0,3.492064646464647e-05,4.2616e-05,4.2616e-05
+Clipped-Qci+Qbv,200,127,127,12,0,1,0.009054893333333335,3.150850393700788e-05,3.4056e-05,3.4056e-05

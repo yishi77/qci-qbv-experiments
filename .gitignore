@@ -1,0 +1,22 @@
+# Build products
+out/
+*.o
+*.so
+
+# OMNeT++ raw result artifacts
+results_baseline/
+results_backlog/
+results_multiswitch/
+results_ablation/
+results_drop_policy/
+results_sensitivity/
+*.sca
+*.vec
+*.vci
+
+# Local editor and Python cache files
+.metadata/
+__pycache__/
+*.py[cod]
+.venv/
+

@@ -1,0 +1,4 @@
+scheme,planned_base_frames,source_packets_sent,delivered,source_admission_dropped,source_filter_dropped,deadline_dropped,full_gate_dropped,full_filter_dropped,max_queue,avg_queue,mean_delay_s,max_delay_s,p99_delay_s
+Qbv-only,200,3200,3200,0,0,0,0,0,1001,182.061008925,0.045596448231249996,0.091093762,0.09005965
+Full-Qci+Qbv,200,3200,200,0,0,0,1000,2000,1,0.0,1.6996e-05,1.6996e-05,1.6996e-05
+Clipped-Qci+Qbv,200,200,200,3000,3000,0,0,0,1,0.0,1.6996e-05,1.6996e-05,1.6996e-05
