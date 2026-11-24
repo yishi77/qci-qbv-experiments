@@ -12,6 +12,7 @@
 - 实验四消融比较使用 `configs/omnetpp_ablation.ini`。
 - 实验五丢弃策略比较使用 `configs/omnetpp_drop_policy.ini`。
 - 实验六参数敏感性扫描使用 `configs/omnetpp_sensitivity.ini`。
+- 实验七交换机入口下沉版 Clipped-Qci（含 `ReorderTimeout` 与早到暂存）使用 `configs/omnetpp_exp7.ini`。
 
 实验四比较 Flow Meter、时间判断、序号判断和完整 Proposed 组合。实验五比较不主动丢弃、Deadline 丢弃和 Deadline 加 MaxQueueDelay 丢弃。实验六扫描时间容差、截止时间、排队时延、突发阈值和 TAS 窗口长度。
 

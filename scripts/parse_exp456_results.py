@@ -75,7 +75,7 @@ def one_row(path: Path) -> dict[str, object]:
     delivered = int(scalars.get((sink, "packets received"), 0))
     source_admission_drop = int(scalars.get((source, "admission dropped frames"), 0))
     gate_drop = int(scalars.get((gate, "droppedPackets:count"), 0))
-    filter_drop = int(scalars.get((filter_path, "droppedPackets:count"), 0))
+    filter_drop = int(scalars.get((filter_path, "droppedPackets:count"), 0)) + int(scalars.get((source, "filter dropped frames"), 0))
     candidate = source_sent + source_admission_drop
     network_drop = max(0, source_sent - delivered)
     total_drop = source_admission_drop + network_drop

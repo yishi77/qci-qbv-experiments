@@ -1,0 +1,5 @@
+config,source_packets_sent,delivered,ingress_passed,buffered,released_after_reorder,dropped_early,dropped_flow,dropped_deadline,dropped_duplicate,dropped_gap_timeout,dropped_reorder_buffer,max_queue,avg_queue,mean_delay_s,max_delay_s,p99_delay_s
+Exp7IngressInsertBurst,203,50,50,0,0,0,0,0,153,0,0,1,0.0,1.7124e-05,1.7124e-05,1.7124e-05
+Exp7IngressLateFreshness,50,35,35,0,0,0,0,15,0,0,0,1,0.0,1.7124e-05,1.7124e-05,1.7124e-05
+Exp7IngressMixed,198,127,127,47,43,0,0,61,10,12,0,1,0.0,1.7909590551181105e-05,9.7124e-05,9.7124e-05
+Exp7IngressReorder,40,20,20,20,20,0,0,0,20,20,0,1,0.0,1.7124e-05,1.7124e-05,1.7124e-05

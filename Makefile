@@ -7,6 +7,8 @@ LDLIBS := -lINET -loppenvir -loppsim -lstdc++ -fopenmp
 
 all: libQciQbv.so
 
+exp7: libQciQbvExp7.so
+
 libQciQbv.so: out/TimingAdmissionUdpSourceApp.o out/TimingUdpSinkApp.o
 	$(CXX) $(LDFLAGS) -o $@ $^ $(LDLIBS) -Wl,-rpath,$(OMNETPP_ROOT)/lib -Wl,-rpath,$(INET_ROOT)/out/gcc-release/src
 
@@ -18,5 +20,20 @@ out/TimingUdpSinkApp.o: src/TimingUdpSinkApp.cc
 	mkdir -p out
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
+libQciQbvExp7.so: out_exp7/TimingAdmissionUdpSourceApp.o out_exp7/TimingUdpSinkApp.o out_exp7/ClippedQciIngressFilter.o
+	$(CXX) $(LDFLAGS) -o $@ $^ $(LDLIBS) -Wl,-rpath,$(OMNETPP_ROOT)/lib -Wl,-rpath,$(INET_ROOT)/out/gcc-release/src
+
+out_exp7/TimingAdmissionUdpSourceApp.o: src_exp7/TimingAdmissionUdpSourceApp.cc
+	mkdir -p out_exp7
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+out_exp7/TimingUdpSinkApp.o: src_exp7/TimingUdpSinkApp.cc
+	mkdir -p out_exp7
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+out_exp7/ClippedQciIngressFilter.o: src_exp7/ClippedQciIngressFilter.cc
+	mkdir -p out_exp7
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
 clean:
-	rm -rf out libQciQbv.so
+	rm -rf out out_exp7 libQciQbv.so libQciQbvExp7.so

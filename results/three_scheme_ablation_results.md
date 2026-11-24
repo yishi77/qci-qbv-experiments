@@ -15,7 +15,7 @@
 | 配置 | 源端准入丢弃 | 网络丢弃 | Gate 丢弃 | Filter 丢弃 | Flow Meter 丢弃 | 早到丢弃 | Deadline 丢弃 |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | AblationFlowMeterOnly | 10 | 0 | 0 | 0 | 10 | 0 | 0 |
-| AblationProposed | 71 | 0 | 0 | 0 | 0 | 0 | 61 |
+| AblationProposed | 71 | 0 | 0 | 10 | 0 | 0 | 61 |
 | AblationTimestampFlow | 71 | 0 | 0 | 0 | 10 | 0 | 61 |
 | AblationTimestampOnly | 61 | 0 | 0 | 0 | 0 | 0 | 61 |
-| AblationTimestampSequence | 71 | 0 | 0 | 0 | 0 | 0 | 61 |
+| AblationTimestampSequence | 71 | 0 | 0 | 10 | 0 | 0 | 61 |

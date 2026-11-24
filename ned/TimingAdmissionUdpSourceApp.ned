@@ -12,9 +12,9 @@ simple TimingAdmissionUdpSourceApp extends UdpBasicApp
         string dropPolicy = default("none");
         int numFrames = default(200);
         int extraInsertCount = default(0);
-        int flowBurstFrames = default(1);
         double cycle @unit(s) = default(1ms);
         double windowStart @unit(s) = default(900us);
+        double windowDuration @unit(s) = default(100us);
         double earlyOffset @unit(s) = default(80us);
         double lateOffset @unit(s) = default(150us);
         double burstOffset @unit(s) = default(120us);
@@ -24,4 +24,7 @@ simple TimingAdmissionUdpSourceApp extends UdpBasicApp
         double serviceTime @unit(s) = default(10us);
         double maxQueueDelay @unit(s) = default(1ms);
         bool applyEarlyTolerance = default(false);
+        bool useFlowMeter = default(false);
+        bool useMaxQueueDelay = default(false);
+        int flowBurstFrames = default(1);
 }

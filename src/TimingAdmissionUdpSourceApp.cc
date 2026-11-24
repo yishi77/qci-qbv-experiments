@@ -39,6 +39,7 @@ class TimingAdmissionUdpSourceApp : public UdpBasicApp
     std::string dropPolicy;
     simtime_t cycle;
     simtime_t windowStart;
+    simtime_t windowDuration;
     simtime_t earlyOffset;
     simtime_t lateOffset;
     simtime_t burstOffset;
@@ -48,6 +49,8 @@ class TimingAdmissionUdpSourceApp : public UdpBasicApp
     simtime_t serviceTime;
     simtime_t maxQueueDelay;
     bool applyEarlyTolerance;
+    bool useFlowMeterParam;
+    bool useMaxQueueDelayParam;
     int flowBurstFrames;
     int numFrames;
     int extraInsertCount;
@@ -89,6 +92,7 @@ void TimingAdmissionUdpSourceApp::initialize(int stage)
         dropPolicy = par("dropPolicy").stdstringValue();
         cycle = par("cycle");
         windowStart = par("windowStart");
+        windowDuration = par("windowDuration");
         earlyOffset = par("earlyOffset");
         lateOffset = par("lateOffset");
         burstOffset = par("burstOffset");
@@ -98,6 +102,8 @@ void TimingAdmissionUdpSourceApp::initialize(int stage)
         serviceTime = par("serviceTime");
         maxQueueDelay = par("maxQueueDelay");
         applyEarlyTolerance = par("applyEarlyTolerance");
+        useFlowMeterParam = par("useFlowMeter");
+        useMaxQueueDelayParam = par("useMaxQueueDelay");
         flowBurstFrames = par("flowBurstFrames");
         numFrames = par("numFrames");
         extraInsertCount = par("extraInsertCount");
@@ -202,18 +208,23 @@ bool TimingAdmissionUdpSourceApp::admit(const FramePlan& plan)
     bool useTimestamp = false;
     bool useSequence = false;
     bool useFlowMeter = false;
+    bool checkMaxQueueDelay = false;
 
     if (admissionMode == "clipped") {
         useTimestamp = true;
         useSequence = true;
+        useFlowMeter = useFlowMeterParam;
+        checkMaxQueueDelay = useMaxQueueDelayParam;
     }
     else if (admissionMode == "ablation") {
         useTimestamp = ablationMode == "timestamp" || ablationMode == "timestamp_seq" || ablationMode == "timestamp_flow" || ablationMode == "proposed";
         useSequence = ablationMode == "timestamp_seq" || ablationMode == "proposed";
         useFlowMeter = ablationMode == "flow" || ablationMode == "timestamp_flow" || ablationMode == "proposed";
+        checkMaxQueueDelay = useMaxQueueDelayParam;
     }
     else if (admissionMode == "policy") {
         useTimestamp = dropPolicy != "none";
+        checkMaxQueueDelay = dropPolicy == "deadline_queue" || useMaxQueueDelayParam;
     }
 
     long long cycleIndex = static_cast<long long>(std::floor(plan.expected / cycle));
@@ -234,18 +245,39 @@ bool TimingAdmissionUdpSourceApp::admit(const FramePlan& plan)
         return true;
     }
 
-    simtime_t currentWindow = cycleIndex * cycle + windowStart;
-    if (currentWindow < plan.arrival)
-        currentWindow += cycle;
-    simtime_t predictedWait = currentWindow - plan.arrival;
-    simtime_t predictedFinish = currentWindow + serviceTime;
+    simtime_t windowOpen = cycleIndex * cycle + windowStart;
+    simtime_t windowClose = windowOpen + windowDuration;
+    simtime_t predictedWait = SIMTIME_ZERO;
+    simtime_t predictedFinish = SIMTIME_ZERO;
+
+    if (plan.arrival < windowOpen) {
+        predictedWait = windowOpen - plan.arrival;
+        predictedFinish = windowOpen + serviceTime;
+    }
+    else if (plan.arrival + serviceTime <= windowClose) {
+        predictedWait = SIMTIME_ZERO;
+        predictedFinish = plan.arrival + serviceTime;
+    }
+    else {
+        simtime_t nextWindow = windowOpen + cycle;
+        while (nextWindow + windowDuration < plan.arrival + serviceTime)
+            nextWindow += cycle;
+        if (plan.arrival < nextWindow) {
+            predictedWait = nextWindow - plan.arrival;
+            predictedFinish = nextWindow + serviceTime;
+        }
+        else {
+            predictedWait = SIMTIME_ZERO;
+            predictedFinish = plan.arrival + serviceTime;
+        }
+    }
 
     if (applyEarlyTolerance && plan.arrival < plan.expected - earlyTolerance) {
         earlyDropped++;
         return false;
     }
 
-    if (admissionMode == "policy" && dropPolicy == "deadline_queue" && predictedWait > maxQueueDelay) {
+    if (checkMaxQueueDelay && predictedWait > maxQueueDelay) {
         deadlineDropped++;
         return false;
     }
